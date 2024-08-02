@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loading">
+        <div class="loader"></div>
+    </div>
+    <div id="content" style="display: none;">
+        <div class="container-fluid p-3">
+            <div class="row mb-4">
+                <div class="col-md-2">
+                    <button class="btn btn-light d-flex align-items-center" id="darkModeToggle">
+                        <i class="fas fa-moon mr-2" id="moonIcon"></i>
+                        <i class="fas fa-sun mr-2" id="sunIcon" style="display:none;"></i>
+                    </button>
+                </div>
+                <div class="col-md-8">
+                    <div class="input-group mt-2">
+                        <input type="text" class="form-control" placeholder="Search for your preferred city..." id="inputCity">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="searchBtn"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 text-right">
+                    <button class="btn btn-success d-flex align-items-center justify-content-center" id="currentLocationBtn"><i class="fas fa-map-marker-alt mr-2"></i> Current Location</button>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-4 shadow-sm">
+                        <h3 id="location-live">New York</h3>
+                        <h1 class="display-4" id="location-time">09:03</h1>
+                        <p id="location-date">Thursday, 31 Aug</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-4 shadow-sm">
+                        <h1 class="display-4" id="temperature">24°C</h1>
+                        <p id="feelTemp">Feels like: 22°C</p>
+                        <p id="weatherCondition"><strong>Sunny</strong></p>
+                        <div class="d-flex justify-content-around">
+                            <div class="text-center">
+                                <i class="fas fa-tint"></i><br>
+                                <small>Humidity</small><br>
+                                <p id="humidity">41%</p>
+                            </div>
+                            <div class="text-center">
+                                <i class="fas fa-wind"></i><br>
+                                <small>Wind Speed</small><br>
+                                <p id="windspeed">2km/h</p>
+                            </div>
+                            <div class="text-center">
+                                <i class="fas fa-tachometer-alt"></i><br>
+                                <small>Pressure</small><br>
+                                <p id="pressure">997hPa</p>
+                            </div>
+                            <div class="text-center">
+                                <i class="fas fa-cloud"></i><br>
+                                <small>Cloud</small><br>
+                                <p id="cloud">50%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3" id="sunset">
+                    <div class="card p-4 shadow-sm">
+                        <div class="d-flex justify-content-between">
+                            <p id="Sunrise"><i class="fas fa-sunrise"></i> Sunrise: 06:37 AM</p>
+                            <p id="Sunset"><i class="fas fa-sunset"></i> Sunset: 20:37 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card p-4 shadow-sm" id="daily">
+                        <h5 class="card-title">5 Days Forecast:</h5>
+                        <ul class="forecast list-unstyled">
+                            <li><i class="fas fa-cloud-sun"></i> 20°C <span class="float-right">Friday, 1 Sep</span></li>
+                            <li><i class="fas fa-cloud"></i> 22°C <span class="float-right">Saturday, 2 Sep</span></li>
+                            <li><i class="fas fa-sun"></i> 27°C <span class="float-right">Sunday, 3 Sep</span></li>
+                            <li><i class="fas fa-cloud-showers-heavy"></i> 18°C <span class="float-right">Monday, 4 Sep</span></li>
+                            <li><i class="fas fa-snowflake"></i> 16°C <span class="float-right">Tuesday, 5 Sep</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card p-4 shadow-sm" id="hourly">
+                        <h5 class="card-title">Hourly Forecast:</h5>
+                        <div class="d-flex justify-content-between">
+                            <div class="text-center">
+                                <small>12:00</small><br>
+                                <i class="fas fa-sun"></i><br>
+                                <small>26°C</small><br>
+                                <small>3km/h</small>
+                            </div>
+                            <div class="text-center">
+                                <small>15:00</small><br>
+                                <i class="fas fa-sun"></i><br>
+                                <small>27°C</small><br>
+                                <small>2km/h</small>
+                            </div>
+                            <div class="text-center">
+                                <small>18:00</small><br>
+                                <i class="fas fa-cloud-sun"></i><br>
+                                <small>27°C</small><br>
+                                <small>2km/h</small>
+                            </div>
+                            <div class="text-center">
+                                <small>21:00</small><br>
+                                <i class="fas fa-cloud-moon"></i><br>
+                                <small>25°C</small><br>
+                                <small>3km/h</small>
+                            </div>
+                            <div class="text-center">
+                                <small>00:00</small><br>
+                                <i class="fas fa-moon"></i><br>
+                                <small>22°C</small><br>
+                                <small>3km/h</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
