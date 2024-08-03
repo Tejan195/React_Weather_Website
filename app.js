@@ -250,6 +250,7 @@ currentLocationBtn.addEventListener('click',()=>{
         navigator.geolocation.getCurrentPosition(position=>{
             const{latitude,longitude}=position.coords;
             fetchWeatherDataByCoords(latitude,longitude);
+            currentLocationBtn.innerHTML = '<i class="fas fa-map-marker-alt mr-2"></i> Current Location';
             setInterval(()=>{
                 fetchWeatherDataByCoords(latitude,longitude);
             },900000);
@@ -263,6 +264,7 @@ currentLocationBtn.addEventListener('click',()=>{
     }else{
         console.error("Geolocation is not supported by this browser");
     }
+    currentLocationBtn.innerHTML = "wait..";
 });
 toggle.addEventListener('click', () => {
    const isDarkMode = document.body.classList.toggle('dark-mode');
