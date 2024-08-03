@@ -19,6 +19,7 @@ const currentLocationBtn = document.getElementById('currentLocationBtn');
 let hourly = [],
     daily = [];
 let weather = '';
+let timeZone = 0;
 
 const fetchWeatherData = async (city) => {
     const BASE_URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
@@ -46,6 +47,7 @@ const displayWeatherData = (data) => {
     pressure.textContent = `${data.main.pressure} hPa`;
     clouds.textContent = `${data.clouds.all}%`;
     weather=data.weather[0].description;
+    timeZone = data.timezone;
     updatetime();
     updateSunRiseSet(data);
     updateBg(weather);
@@ -55,8 +57,9 @@ const displayWeatherData = (data) => {
 
 const updatetime = () => {
     const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
+    const localTime = new Date(now.getTime()+(timeZone*1000));
+    const hours = localTime.getHours();
+    const minutes = localTime.getMinutes();
     const ampm = hours >= 12 ? 'pm' : 'am';
     const formattedHours = hours % 12 || 12;
     location_time.innerHTML = `${formattedHours}:${minutes < 10 ? '0' + minutes : minutes} ${ampm}`;
@@ -64,9 +67,9 @@ const updatetime = () => {
     const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const dayOfWeek = weekDays[now.getDay()];
-    const day = now.getDate();
-    const month = months[now.getMonth()];
-    const year = now.getFullYear();
+    const day = localTime.getDate();
+    const month = months[localTime.getMonth()];
+    const year = localTime.getFullYear();
     location_date.textContent = `${dayOfWeek}, ${day < 10 ? '0' + day : day} ${month}`;
 };
 
