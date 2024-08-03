@@ -57,20 +57,20 @@ const displayWeatherData = (data) => {
 
 const updatetime = () => {
     const now = new Date();
-    const localTime = new Date(now.getTime()+(timeZone*1000));
-    const hours = localTime.getHours();
-    const minutes = localTime.getMinutes();
+    const localTime = new Date(now.getTime()+timeZone*1000);
+    const hours = localTime.getUTCHours();
+    const minutes = localTime.getUTCMinutes();
     const ampm = hours >= 12 ? 'pm' : 'am';
     const formattedHours = hours % 12 || 12;
     location_time.innerHTML = `${formattedHours}:${minutes < 10 ? '0' + minutes : minutes} ${ampm}`;
 
     const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const dayOfWeek = weekDays[now.getDay()];
-    const day = localTime.getDate();
-    const month = months[localTime.getMonth()];
+    const dayOfWeek = weekDays[now.getUTCDay()];
+    const day = localTime.getUTCDate();
+    const month = months[localTime.getUTCMonth()];
     const year = localTime.getFullYear();
-    location_date.textContent = `${dayOfWeek}, ${day < 10 ? '0' + day : day} ${month}`;
+    location_date.textContent = `${dayOfWeek}, ${day < 10 ? '0' + day : day} ${month} ${year}`;
 };
 
 setInterval(updatetime, 60000);
@@ -119,10 +119,11 @@ const updateTabs = (hourly, daily) => {
     dailyContainer.innerHTML = `<h5 class="card-title">5 Days Forecast:</h5>
                                 <ul class="forecast list-unstyled">
                                     ${daily.map(day => {
-                                        const date = new Date(day.dt * 1000);
-                                        const dayOfWeek = date.toLocaleString('en-US', { weekday: 'long' });
-                                        const formattedDate = date.getDate();
-                                        const month = date.toLocaleDateString('en-US', { month: 'short' });
+                                        const date = new Date((day.dt + timeZone) * 1000);
+                                        const localDate = new Date(date.getTime()+(new Date().getTimezoneOffset()*60000));
+                                        const dayOfWeek = localDate.toLocaleString('en-US', { weekday: 'long' });
+                                        const formattedDate = localDate.getDate();
+                                        const month = localDate.toLocaleDateString('en-US', { month: 'short' });
                                         const weatherICon = weatherIcon[day.weather[0].description]||'fa-cloud';
                                         return `<li>
                                                     <i class="fas ${weatherICon}"></i> ${day.main.temp}°C
@@ -134,8 +135,9 @@ const updateTabs = (hourly, daily) => {
                                 hourlyContainer.innerHTML = `<h5 class="card-title">Hourly Forecast:</h5>
                                 <div class="d-flex justify-content-between">
                                     ${hourly.map(hour => {
-                                       const date = new Date(hour.dt * 1000);
-                                       const time = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                                       const date = new Date((hour.dt + timeZone) * 1000);
+                                       const localDate = new Date(date.getTime()+(new Date().getTimezoneOffset()*60000));
+                                       const time = localDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
                                        const weatherICon = weatherIcon[hour.weather[0].description]||'fa-cloud';
                                        console.log(hour.weather[0].description);
                                        return `<div class="text-center">
